@@ -1,0 +1,18 @@
+{
+      "name": "gpa-calculator",
+      "version": "1.0.0",
+      "description": "An app to calculate your GPA's and CGPA's and also a place to store them.",
+      "main": "index.js",
+      "scripts": {
+            "dev": "next",
+            "start": "next start",
+            "build": "next build"
+      },
+      "author": "Elan",
+      "license": "ISC",
+      "dependencies": {
+            "next": "^9.4.4",
+            "react": "^16.13.1",
+            "react-dom": "^16.13.1"
+      }
+}
