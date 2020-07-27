@@ -1,12 +1,9 @@
 import React from 'react';
-import { Container } from 'react-bootstrap';
-import { Button } from 'react-bootstrap';
+import GpaCalculation from '../src/Containers/GpaCalculation/GpaCalculation';
 
 function HomePage() {
       return(
-            <Container >
-                  
-            </Container>
+            <GpaCalculation />
       )
 }
 
