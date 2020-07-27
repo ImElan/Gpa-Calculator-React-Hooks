@@ -2,7 +2,8 @@ import React from 'react';
 
 import { InputGroup,Form,Col } from 'react-bootstrap';
 
-function CreditGradeElement() {
+function CreditGradeElement(props) {
+      const { grades }  = props;
       return(
             <Col md={8} className='mb-3'>
                   <InputGroup>
@@ -25,11 +26,9 @@ function CreditGradeElement() {
                         <Form.Control
                               as='select'
                         >
-                              <option>O</option>
-                              <option>A+</option>
-                              <option>A</option>
-                              <option>B+</option>
-                              <option>B</option>
+                              { grades.map( (grade,index) => (
+                                    <option key={index}>{grade}</option>
+                              ))}
                         </Form.Control>
                   </InputGroup>
             </Col>

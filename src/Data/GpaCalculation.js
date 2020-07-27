@@ -1,4 +1,4 @@
-export const creditGrade = {
+export const defaultCreditGrade = {
       'O':10,
       'A+':9,
       'A':8,
