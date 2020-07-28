@@ -8,11 +8,9 @@ import { useModalState } from '../../hooks/useModalState';
 import { defaultCreditGrade } from '../../Data/GpaCalculation';
 
 import { v4 as uuidv4 } from 'uuid';
-
 import { Container,Button,Row, Col } from 'react-bootstrap';
 
 function GpaCalculation() {
-
       const [ numSubjects,setNumSubjects ] = useState(0);
       const [ creditGradeFormat,setCreditGradeFormat ] = useState(defaultCreditGrade);
       const [ creditGradeArray,setCreditGradeArray ] = useState([]);   
