@@ -22,7 +22,7 @@ function GpaCalculation() {
             let updatedArray = [...creditGradeArray];
             if(newNum > numSubjects) {
                   for(let i=0;i<newNum-numSubjects;i++) {
-                        updatedArray.push({credit:4,grade:'A+'});
+                        updatedArray.push({credit:3,grade:'A'});
                   }
             } else if(numSubjects > newNum) {
                   updatedArray = updatedArray.slice(0,newNum);

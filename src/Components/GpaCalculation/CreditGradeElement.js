@@ -2,8 +2,17 @@ import React from 'react';
 
 import { InputGroup,Form,Col } from 'react-bootstrap';
 
+const renderCreditOptions = Array.from({length:5}).map((_,index) => (
+      <option>{index+1}</option>
+))
+
 function CreditGradeElement(props) {
-      const { grades }  = props;
+      const { grades,creditGrade }  = props;
+
+      const renderGradesOption = grades.map( (grade,index) => (
+            <option key={index}>{grade}</option>
+      ))
+
       return(
             <Col md={8} className='mb-3'>
                   <InputGroup>
@@ -13,22 +22,18 @@ function CreditGradeElement(props) {
                         <Form.Control
                               as='select'
                               className='mr-4'
+                              value={creditGrade.credit}
                         >
-                              <option>5</option>
-                              <option>4</option>
-                              <option>3</option>
-                              <option>2</option>
-                              <option>1</option>
+                              {renderCreditOptions}
                         </Form.Control>
                         <InputGroup.Prepend>
                               <InputGroup.Text>Grades</InputGroup.Text>
                         </InputGroup.Prepend>
                         <Form.Control
                               as='select'
+                              value={creditGrade.grade}
                         >
-                              { grades.map( (grade,index) => (
-                                    <option key={index}>{grade}</option>
-                              ))}
+                              {renderGradesOption}
                         </Form.Control>
                   </InputGroup>
             </Col>

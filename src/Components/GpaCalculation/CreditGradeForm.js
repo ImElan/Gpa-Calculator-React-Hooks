@@ -7,7 +7,13 @@ function CreditGradeForm(props) {
       const { grades,creditGradeArray } = props;
       return(
             <Row className='justify-content-center mt-5'>
-                  {/* { creditGradeArray.map() } */}
+                  { creditGradeArray.map( (creditGrade,index) => (
+                        <CreditGradeElement 
+                              key={index} 
+                              creditGrade={creditGrade} 
+                              grades={grades}
+                        />
+                  )) }
             </Row>
       )
 }
