@@ -6,13 +6,13 @@ import { defaultCreditGrade } from '../../Data/GpaCalculation';
 
 import { v4 as uuidv4 } from 'uuid';
 
-import { Container } from 'react-bootstrap';
+import { Container,Button,Row, Col } from 'react-bootstrap';
 
 function GpaCalculation() {
 
       const [ numSubjects,setNumSubjects ] = useState(0);
       const [ creditGradeFormat,setCreditGradeFormat ] = useState(defaultCreditGrade);
-      const [ creditGradeArray,setCreditGradeArray ] = useState([]);
+      const [ creditGradeArray,setCreditGradeArray ] = useState([]);    
 
       const grades = Object.keys(creditGradeFormat);
 
@@ -33,13 +33,44 @@ function GpaCalculation() {
       }
 
       const handleCreditChange = (id,newCredit) => {
-            console.log(id);
-            console.log(newCredit);
+            const updatedArray = creditGradeArray.map( (creditGrade) => {
+                  if(creditGrade.id !== id) {
+                        return creditGrade;
+                  } else {
+                        return {
+                              ...creditGrade,
+                              credit:+newCredit
+                        }
+                  }
+            })
+            setCreditGradeArray(updatedArray);
       }
       
       const handleGradeChange = (id,newGrade) => {
-            console.log(id);
-            console.log(newGrade);
+            const updatedArray = creditGradeArray.map( (creditGrade) => {
+                  if(creditGrade.id !== id) {
+                        return creditGrade;
+                  } else {
+                        return {
+                              ...creditGrade,
+                              grade:newGrade
+                        }
+                  }
+            })
+            setCreditGradeArray(updatedArray);
+      }
+
+      const handleCalculate = () => {
+            // [{credit:3,grade:'A+'},{credit:2,grade:'B+'}]
+            let numerator = 0;
+            let denominator = 0;
+            creditGradeArray.forEach( creditGrade => {
+                  let gradePoint = creditGradeFormat[creditGrade.grade];
+                  numerator += gradePoint * creditGrade.credit;
+                  denominator += creditGrade.credit;
+            })
+            const gpa = (numerator/denominator).toFixed(3);
+            console.log(gpa);
       }
 
       return(
@@ -56,6 +87,20 @@ function GpaCalculation() {
                         handleCreditChange={handleCreditChange}
                         handleGradeChange={handleGradeChange}
                   />
+                  {numSubjects>0 && <Row className='justify-content-center mt-4'>
+                        <Col md={4} className='d-flex justify-content-center'>
+                              <Button 
+                                    style={{
+                                          width:'100%'
+                                    }} 
+                                    variant='primary' 
+                                    className='text-center'
+                                    onClick={handleCalculate}
+                              >
+                                    Calculate
+                              </Button>
+                        </Col>
+                  </Row>}
             </Container>
       )
 }
