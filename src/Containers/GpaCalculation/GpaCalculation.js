@@ -1,6 +1,9 @@
 import React,{ useState } from 'react';
 import SubjectForm from '../../Components/GpaCalculation/SubjectForm';
 import CreditGradeForm from '../../Components/GpaCalculation/CreditGradeForm';
+import ResultModal from '../../Components/UI/ResultModal';
+
+import { useModalState } from '../../hooks/useModalState';
 
 import { defaultCreditGrade } from '../../Data/GpaCalculation';
 
@@ -12,7 +15,9 @@ function GpaCalculation() {
 
       const [ numSubjects,setNumSubjects ] = useState(0);
       const [ creditGradeFormat,setCreditGradeFormat ] = useState(defaultCreditGrade);
-      const [ creditGradeArray,setCreditGradeArray ] = useState([]);    
+      const [ creditGradeArray,setCreditGradeArray ] = useState([]);   
+      
+      const [ show,openModal,closeModal ] = useModalState(false);
 
       const grades = Object.keys(creditGradeFormat);
 
@@ -74,34 +79,40 @@ function GpaCalculation() {
       }
 
       return(
-            <Container className='mt-5'>
-                  <SubjectForm 
-                        totalSubjects={15} 
-                        creditGradeArray={creditGradeArray}
-                        handleNumSubjectsChange={handleNumSubjectsChange}
-                        handleCreditGradeArrayChange={handleCreditGradeArrayChange}
+            <>
+                  <Container className='mt-5'>
+                        <SubjectForm 
+                              totalSubjects={15} 
+                              creditGradeArray={creditGradeArray}
+                              handleNumSubjectsChange={handleNumSubjectsChange}
+                              handleCreditGradeArrayChange={handleCreditGradeArrayChange}
+                        />
+                        <CreditGradeForm 
+                              grades={grades}
+                              creditGradeArray={creditGradeArray}
+                              handleCreditChange={handleCreditChange}
+                              handleGradeChange={handleGradeChange}
+                        />
+                        {numSubjects>0 && <Row className='justify-content-center mt-4'>
+                              <Col md={4} className='d-flex justify-content-center'>
+                                    <Button 
+                                          style={{
+                                                width:'100%'
+                                          }} 
+                                          variant='primary' 
+                                          className='text-center'
+                                          onClick={handleCalculate}
+                                    >
+                                          Calculate
+                                    </Button>
+                              </Col>
+                        </Row>}
+                  </Container>
+                  <ResultModal 
+                        show={show}
+                        handleClose={closeModal}
                   />
-                  <CreditGradeForm 
-                        grades={grades}
-                        creditGradeArray={creditGradeArray}
-                        handleCreditChange={handleCreditChange}
-                        handleGradeChange={handleGradeChange}
-                  />
-                  {numSubjects>0 && <Row className='justify-content-center mt-4'>
-                        <Col md={4} className='d-flex justify-content-center'>
-                              <Button 
-                                    style={{
-                                          width:'100%'
-                                    }} 
-                                    variant='primary' 
-                                    className='text-center'
-                                    onClick={handleCalculate}
-                              >
-                                    Calculate
-                              </Button>
-                        </Col>
-                  </Row>}
-            </Container>
+            </>     
       )
 }
 
