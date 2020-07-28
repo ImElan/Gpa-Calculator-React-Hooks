@@ -14,10 +14,34 @@ function GpaCalculation() {
 
       const grades = Object.keys(creditGradeFormat);
 
+      const handleNumSubjectsChange = (newNum) => {
+            setNumSubjects(newNum);
+      }
+
+      const handleCreditGradeArrayChange = (newNum) => { 
+            let updatedArray = [...creditGradeArray];
+            if(newNum > numSubjects) {
+                  for(let i=0;i<newNum-numSubjects;i++) {
+                        updatedArray.push({credit:4,grade:'A+'});
+                  }
+            } else if(numSubjects > newNum) {
+                  updatedArray = updatedArray.slice(0,newNum);
+            }
+            setCreditGradeArray(updatedArray);
+      }
+
       return(
             <Container className='mt-5'>
-                  <SubjectForm numOfSubjects={15} setNumSubjects={setNumSubjects} />
-                  <CreditGradeForm numSubjects={numSubjects} grades={grades}/>
+                  <SubjectForm 
+                        totalSubjects={15} 
+                        creditGradeArray={creditGradeArray}
+                        handleNumSubjectsChange={handleNumSubjectsChange}
+                        handleCreditGradeArrayChange={handleCreditGradeArrayChange}
+                  />
+                  <CreditGradeForm 
+                        grades={grades}
+                        creditGradeArray={creditGradeArray}
+                  />
             </Container>
       )
 }

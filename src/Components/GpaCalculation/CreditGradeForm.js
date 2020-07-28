@@ -4,12 +4,10 @@ import CreditGradeElement from './CreditGradeElement';
 import { Row } from 'react-bootstrap';
 
 function CreditGradeForm(props) {
-      const { numSubjects,grades } = props;
+      const { grades,creditGradeArray } = props;
       return(
             <Row className='justify-content-center mt-5'>
-                  {Array.from({length:numSubjects}).map( (_,index) => (
-                        <CreditGradeElement key={index} grades={grades} />
-                  ))}
+                  {/* { creditGradeArray.map() } */}
             </Row>
       )
 }

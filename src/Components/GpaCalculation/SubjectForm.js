@@ -9,15 +9,17 @@ import { InputGroup, Form, Row, Col  } from 'react-bootstrap';
 function SubjectForm(props) {
 
       const [ input,handleChange,resetInput ] = useInputState('0');
-      const { numOfSubjects,setNumSubjects } = props;
+      const { totalSubjects,handleNumSubjectsChange,handleCreditGradeArrayChange } = props;
 
-      const renderOptions = Array.from({length:numOfSubjects+1}).map( (_,index) => (
+      const renderOptions = Array.from({length:totalSubjects+1}).map( (_,index) => (
             <option key={index}>{index}</option>
       )) 
 
       const handleNumberOfSubjectChange = (event) => {
-            setNumSubjects(+event.target.value);
+            const newNumberOfSubject = +event.target.value;
             handleChange(event);
+            handleCreditGradeArrayChange(newNumberOfSubject);
+            handleNumSubjectsChange(newNumberOfSubject);
       }
 
       return(
