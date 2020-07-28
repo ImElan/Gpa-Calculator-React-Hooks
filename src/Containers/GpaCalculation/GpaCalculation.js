@@ -9,6 +9,7 @@ import { defaultCreditGrade } from '../../Data/GpaCalculation';
 
 import { v4 as uuidv4 } from 'uuid';
 import { Container,Button,Row, Col } from 'react-bootstrap';
+import EnterNameModal from '../../Components/UI/EnterNameModal';
 
 function GpaCalculation() {
       const [ numSubjects,setNumSubjects ] = useState(0);
@@ -17,7 +18,8 @@ function GpaCalculation() {
       const [ gpa,setGpa] = useState('');
       const [ credit,setCredit ] = useState('');
       
-      const [ show,openModal,closeModal ] = useModalState(false);
+      const [ showGpaModal,openGpaModal,closeGpaModal ] = useModalState(false);
+      const [ showNameModal,openNameModal,closeNameModal ] = useModalState(false);
 
       const grades = Object.keys(creditGradeFormat);
 
@@ -77,10 +79,10 @@ function GpaCalculation() {
             const gpa = (numerator/denominator).toFixed(3);
             setGpa(gpa);
             setCredit(denominator);
-            openModal();
+            openGpaModal();
       }
 
-      const saveGpa = () => {
+      const saveGpa = (name) => {
             // console.log('Saving Feature Goes here...')
             /*  
                   1. check the local storage if it already has a gpa array.
@@ -89,7 +91,8 @@ function GpaCalculation() {
             */
             const newGpa = {
                   gpa: gpa,
-                  credit: credit
+                  credit: credit,
+                  name:name
             }
             const storedGpa = window.localStorage.getItem('gpa');
             if(storedGpa) {
@@ -99,7 +102,7 @@ function GpaCalculation() {
             } else {
                   window.localStorage.setItem('gpa',JSON.stringify([newGpa]));
             }
-            closeModal();
+            closeGpaModal();
       }
 
       return(
@@ -133,10 +136,15 @@ function GpaCalculation() {
                         </Row>}
                   </Container>
                   <ResultModal 
-                        show={show}
+                        show={showGpaModal}
                         credit={credit}
                         gpa={gpa}
-                        handleClose={closeModal}
+                        handleClose={closeGpaModal}
+                        handleContinue={openNameModal}
+                  />
+                  <EnterNameModal 
+                        show={showNameModal}
+                        handleClose={closeNameModal}
                         handleSaveGpa={saveGpa}
                   />
             </>     

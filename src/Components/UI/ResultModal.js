@@ -3,7 +3,13 @@ import React from 'react';
 import { Modal,Button } from 'react-bootstrap';
 
 function ResultModal(props) {
-      const { show,credit,gpa,handleClose,handleSaveGpa } = props;
+      const { show,credit,gpa,handleClose,handleContinue } = props;
+
+      const continueHandler = () => {
+            handleClose();
+            handleContinue();
+      }
+
       return(
             <Modal 
                   centered
@@ -21,7 +27,7 @@ function ResultModal(props) {
                   <Button variant="secondary" onClick={handleClose}>
                         Close
                   </Button>
-                  <Button variant="primary" onClick={handleSaveGpa}>
+                  <Button variant="primary" onClick={continueHandler}>
                         Save
                   </Button>
                   </Modal.Footer>
