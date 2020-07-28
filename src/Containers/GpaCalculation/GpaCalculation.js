@@ -16,6 +16,8 @@ function GpaCalculation() {
       const [ numSubjects,setNumSubjects ] = useState(0);
       const [ creditGradeFormat,setCreditGradeFormat ] = useState(defaultCreditGrade);
       const [ creditGradeArray,setCreditGradeArray ] = useState([]);   
+      const [ gpa,setGpa] = useState('');
+      const [ credit,setCredit ] = useState('');
       
       const [ show,openModal,closeModal ] = useModalState(false);
 
@@ -75,7 +77,14 @@ function GpaCalculation() {
                   denominator += creditGrade.credit;
             })
             const gpa = (numerator/denominator).toFixed(3);
-            console.log(gpa);
+            setGpa(gpa);
+            setCredit(denominator);
+            openModal();
+      }
+
+      const saveGpa = () => {
+            console.log('Saving Feature Goes here...')
+            closeModal();
       }
 
       return(
@@ -110,7 +119,10 @@ function GpaCalculation() {
                   </Container>
                   <ResultModal 
                         show={show}
+                        credit={credit}
+                        gpa={gpa}
                         handleClose={closeModal}
+                        handleSaveGpa={saveGpa}
                   />
             </>     
       )

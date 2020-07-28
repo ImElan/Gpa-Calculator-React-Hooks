@@ -3,7 +3,7 @@ import React from 'react';
 import { Modal,Button } from 'react-bootstrap';
 
 function ResultModal(props) {
-      const { show,handleClose,handleSaveGpa } = props;
+      const { show,credit,gpa,handleClose,handleSaveGpa } = props;
       return(
             <Modal 
                   centered
@@ -14,7 +14,8 @@ function ResultModal(props) {
                         <Modal.Title>Your GPA</Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                        Gpa and Credit goes here....
+                        <h6>Total Credits : {credit}</h6>
+                        <h6>GPA : {gpa}</h6>
                   </Modal.Body>
                   <Modal.Footer>
                   <Button variant="secondary" onClick={handleClose}>
