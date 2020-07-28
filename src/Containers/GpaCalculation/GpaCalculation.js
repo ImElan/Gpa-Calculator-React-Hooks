@@ -102,7 +102,7 @@ function GpaCalculation() {
             } else {
                   window.localStorage.setItem('gpa',JSON.stringify([newGpa]));
             }
-            closeGpaModal();
+            closeNameModal();
       }
 
       return(
@@ -152,3 +152,11 @@ function GpaCalculation() {
 }
 
 export default GpaCalculation;
+
+/* 
+      ==> TODO <==
+      1.after saving gpa change number of subject to zero.
+      2.also set the gpa credit elements to default.
+
+      these thing has to do with reseting the forms.
+*/

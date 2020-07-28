@@ -1,10 +1,17 @@
 import React from 'react';
 
 import { Modal,Button,Form } from 'react-bootstrap';
+import { useInputState } from '../../hooks/useInputState';
 
 function EnterNameModal(props) {
       
       const { show,handleClose,handleSaveGpa } = props;
+      const [ name,handleChange,resetName ] = useInputState('');
+
+      const saveGpa = () => {
+            handleSaveGpa(name);
+            resetName();
+      }
 
       return(
             <Modal 
@@ -21,6 +28,8 @@ function EnterNameModal(props) {
                               <Form.Control 
                                     type='text' 
                                     placeholder='Example : Semester 1'
+                                    value={name}
+                                    onChange={handleChange}
                               />
                               <Form.Text className='text-muted'>
                                     Give it a meaningful name so that it will be easier for you to understand it later      
@@ -31,7 +40,7 @@ function EnterNameModal(props) {
                   <Button variant="secondary" onClick={handleClose}>
                         Close
                   </Button>
-                  <Button variant="primary" onClick={handleSaveGpa}>
+                  <Button variant="primary" onClick={saveGpa}>
                         Save
                   </Button>
                   </Modal.Footer>
