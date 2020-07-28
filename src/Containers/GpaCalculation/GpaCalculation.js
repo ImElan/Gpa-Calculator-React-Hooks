@@ -32,12 +32,14 @@ function GpaCalculation() {
             setCreditGradeArray(updatedArray);
       }
 
-      const handleGradeChange = () => {
-
+      const handleCreditChange = (id,newCredit) => {
+            console.log(id);
+            console.log(newCredit);
       }
-
-      const handleCreditChange = () => {
-
+      
+      const handleGradeChange = (id,newGrade) => {
+            console.log(id);
+            console.log(newGrade);
       }
 
       return(
@@ -51,6 +53,8 @@ function GpaCalculation() {
                   <CreditGradeForm 
                         grades={grades}
                         creditGradeArray={creditGradeArray}
+                        handleCreditChange={handleCreditChange}
+                        handleGradeChange={handleGradeChange}
                   />
             </Container>
       )
