@@ -4,6 +4,8 @@ import CreditGradeForm from '../../Components/GpaCalculation/CreditGradeForm';
 
 import { defaultCreditGrade } from '../../Data/GpaCalculation';
 
+import { v4 as uuidv4 } from 'uuid';
+
 import { Container } from 'react-bootstrap';
 
 function GpaCalculation() {
@@ -22,12 +24,20 @@ function GpaCalculation() {
             let updatedArray = [...creditGradeArray];
             if(newNum > numSubjects) {
                   for(let i=0;i<newNum-numSubjects;i++) {
-                        updatedArray.push({credit:3,grade:'A'});
+                        updatedArray.push({credit:3,grade:'A',id:uuidv4()});
                   }
             } else if(numSubjects > newNum) {
                   updatedArray = updatedArray.slice(0,newNum);
             }
             setCreditGradeArray(updatedArray);
+      }
+
+      const handleGradeChange = () => {
+
+      }
+
+      const handleCreditChange = () => {
+
       }
 
       return(

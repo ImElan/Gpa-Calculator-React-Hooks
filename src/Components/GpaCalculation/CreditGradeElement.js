@@ -3,7 +3,7 @@ import React from 'react';
 import { InputGroup,Form,Col } from 'react-bootstrap';
 
 const renderCreditOptions = Array.from({length:5}).map((_,index) => (
-      <option>{index+1}</option>
+      <option key={index}>{index+1}</option>
 ))
 
 function CreditGradeElement(props) {
