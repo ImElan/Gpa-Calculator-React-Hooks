@@ -81,7 +81,24 @@ function GpaCalculation() {
       }
 
       const saveGpa = () => {
-            console.log('Saving Feature Goes here...')
+            // console.log('Saving Feature Goes here...')
+            /*  
+                  1. check the local storage if it already has a gpa array.
+                        ---> if so get it parse it and push the new gpa to it and store it back.
+                        ---> if not make a new array and push the new gpa and store it.
+            */
+            const newGpa = {
+                  gpa: gpa,
+                  credit: credit
+            }
+            const storedGpa = window.localStorage.getItem('gpa');
+            if(storedGpa) {
+                  const gpaArray = JSON.parse(storedGpa);
+                  gpaArray.push(newGpa);
+                  window.localStorage.setItem('gpa',JSON.stringify(gpaArray));
+            } else {
+                  window.localStorage.setItem('gpa',JSON.stringify([newGpa]));
+            }
             closeModal();
       }
 
