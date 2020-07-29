@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{forwardRef} from 'react';
 import CreditGradeElement from './CreditGradeElement';
 
 import { Row } from 'react-bootstrap';

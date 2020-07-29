@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{forwardRef,useImperativeHandle} from 'react';
 
 // Custom Hooks
 import { useInputState } from '../../hooks/useInputState';
@@ -6,7 +6,7 @@ import { useInputState } from '../../hooks/useInputState';
 // BootStrap
 import { InputGroup, Form, Row, Col  } from 'react-bootstrap';
 
-function SubjectForm(props) {
+function SubjectForm(props,ref) {
 
       const [ input,handleChange,resetInput ] = useInputState('0');
       const { totalSubjects,handleNumSubjectsChange,handleCreditGradeArrayChange } = props;
@@ -21,6 +21,12 @@ function SubjectForm(props) {
             handleCreditGradeArrayChange(newNumberOfSubject);
             handleNumSubjectsChange(newNumberOfSubject);
       }
+
+      useImperativeHandle(ref,() => (
+            {
+                  resetInput
+            }
+      ))
 
       return(
             <Row className='justify-content-center'>
@@ -42,4 +48,4 @@ function SubjectForm(props) {
       )
 }
 
-export default SubjectForm;
+export default forwardRef(SubjectForm);

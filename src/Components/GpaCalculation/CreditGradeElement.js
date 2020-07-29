@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{forwardRef,useImperativeHandle} from 'react';
 
 import { useInputState } from '../../hooks/useInputState';
 

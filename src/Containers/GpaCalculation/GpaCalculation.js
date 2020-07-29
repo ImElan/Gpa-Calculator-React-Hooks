@@ -1,4 +1,4 @@
-import React,{ useState } from 'react';
+import React,{ useState,useRef } from 'react';
 import SubjectForm from '../../Components/GpaCalculation/SubjectForm';
 import CreditGradeForm from '../../Components/GpaCalculation/CreditGradeForm';
 import ResultModal from '../../Components/UI/ResultModal';
@@ -22,13 +22,15 @@ function GpaCalculation() {
       const [ showGpaModal,openGpaModal,closeGpaModal ] = useModalState(false);
       const [ showNameModal,openNameModal,closeNameModal ] = useModalState(false);
       const [ showToast,openToast,closeToast] = useModalState(false);
-
+      
+      const subjectForm = useRef(null);
+      
       const grades = Object.keys(creditGradeFormat);
-
+      
       const handleNumSubjectsChange = (newNum) => {
             setNumSubjects(newNum);
       }
-
+      
       const handleCreditGradeArrayChange = (newNum) => { 
             let updatedArray = [...creditGradeArray];
             if(newNum > numSubjects) {
@@ -105,6 +107,8 @@ function GpaCalculation() {
                   window.localStorage.setItem('gpa',JSON.stringify([newGpa]));
             }
             closeNameModal();
+            setNumSubjects(0);
+            subjectForm.current.resetInput();
             openToast();
       }
 
@@ -112,18 +116,21 @@ function GpaCalculation() {
             <>
                   <Container className='mt-5'>
                         <SubjectForm 
+                              ref={subjectForm}
                               totalSubjects={15} 
                               creditGradeArray={creditGradeArray}
                               handleNumSubjectsChange={handleNumSubjectsChange}
                               handleCreditGradeArrayChange={handleCreditGradeArrayChange}
                         />
+                        {numSubjects > 0 && 
                         <CreditGradeForm 
                               grades={grades}
                               creditGradeArray={creditGradeArray}
                               handleCreditChange={handleCreditChange}
                               handleGradeChange={handleGradeChange}
-                        />
-                        {numSubjects>0 && <Row className='justify-content-center mt-4'>
+                        />}
+                        {numSubjects>0 && 
+                        <Row className='justify-content-center mt-4'>
                               <Col md={4} className='d-flex justify-content-center'>
                                     <Button 
                                           style={{
