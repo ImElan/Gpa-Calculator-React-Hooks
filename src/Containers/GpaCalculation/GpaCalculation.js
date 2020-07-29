@@ -10,6 +10,7 @@ import { defaultCreditGrade } from '../../Data/GpaCalculation';
 import { v4 as uuidv4 } from 'uuid';
 import { Container,Button,Row, Col } from 'react-bootstrap';
 import EnterNameModal from '../../Components/UI/EnterNameModal';
+import NotificationToast from '../../Components/UI/NotificationToast';
 
 function GpaCalculation() {
       const [ numSubjects,setNumSubjects ] = useState(0);
@@ -20,6 +21,7 @@ function GpaCalculation() {
       
       const [ showGpaModal,openGpaModal,closeGpaModal ] = useModalState(false);
       const [ showNameModal,openNameModal,closeNameModal ] = useModalState(false);
+      const [ showToast,openToast,closeToast] = useModalState(false);
 
       const grades = Object.keys(creditGradeFormat);
 
@@ -103,6 +105,7 @@ function GpaCalculation() {
                   window.localStorage.setItem('gpa',JSON.stringify([newGpa]));
             }
             closeNameModal();
+            openToast();
       }
 
       return(
@@ -146,6 +149,11 @@ function GpaCalculation() {
                         show={showNameModal}
                         handleClose={closeNameModal}
                         handleSaveGpa={saveGpa}
+                  />
+                  <NotificationToast
+                        show={showToast}
+                        message='Gpa Saved'
+                        closeToast={closeToast}
                   />
             </>     
       )
