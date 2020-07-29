@@ -109,6 +109,7 @@ function GpaCalculation() {
             closeNameModal();
             setNumSubjects(0);
             subjectForm.current.resetInput();
+            setCreditGradeArray([]);
             openToast();
       }
 

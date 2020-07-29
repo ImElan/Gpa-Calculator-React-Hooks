@@ -1,10 +1,12 @@
-import React,{forwardRef} from 'react';
+import React from 'react';
 import CreditGradeElement from './CreditGradeElement';
 
 import { Row } from 'react-bootstrap';
 
 function CreditGradeForm(props) {
+      
       const { grades,creditGradeArray,handleCreditChange,handleGradeChange } = props;
+
       return(
             <Row className='justify-content-center mt-5'>
                   { creditGradeArray.map( (creditGrade) => (
