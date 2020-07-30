@@ -1,14 +1,11 @@
 import React from 'react';
-import GpaCgpaCard from '../../src/Components/UI/GpaCgpaCard';
-import { Container } from 'react-bootstrap';
+import Results from '../../src/Containers/Results/Results';
 
 function ViewPage(props) {
       const { data } = props;
       console.log(data);
       return(
-            <Container className='mt-4'>
-                  <GpaCgpaCard />
-            </Container>
+            <Results data={data} />
       )
 }
 

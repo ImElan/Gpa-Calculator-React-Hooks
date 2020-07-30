@@ -94,10 +94,10 @@ function GpaCalculation() {
                         ---> if not make a new array and push the new gpa and store it.
             */
             const newGpa = {
-                  gpa: gpa,
-                  credit: credit,
-                  name:name,
-                  gpaId:uuidv4()
+                  result: gpa,
+                  credits: credit,
+                  title:name,
+                  id:uuidv4()
             }
             const storedGpa = window.localStorage.getItem('gpa');
             if(storedGpa) {
