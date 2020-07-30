@@ -96,7 +96,8 @@ function GpaCalculation() {
             const newGpa = {
                   gpa: gpa,
                   credit: credit,
-                  name:name
+                  name:name,
+                  gpaId:uuidv4()
             }
             const storedGpa = window.localStorage.getItem('gpa');
             if(storedGpa) {
@@ -170,7 +171,7 @@ function GpaCalculation() {
 export default GpaCalculation;
 
 /* 
-      ==> TODO <==
+      ==> TODO <==  (DONE)
       1.after saving gpa change number of subject to zero.
       2.also set the gpa credit elements to default.
 
