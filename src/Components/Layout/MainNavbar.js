@@ -25,6 +25,7 @@ function MainNavbar() {
                         <Nav className="ml-auto">
                               { navigationItems.map( navItem => (
                                     <NavItems
+                                          key={navItem.name}
                                           name={navItem.name}
                                           path={navItem.path}
                                           as={navItem.as}

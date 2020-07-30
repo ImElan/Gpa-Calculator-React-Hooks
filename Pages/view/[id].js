@@ -1,9 +1,12 @@
 import React from 'react';
 
 function ViewPage(props) {
-      const { id } = props;
+      const { data } = props;
+      console.log(data);
       return(
-            <h1>View {id}</h1>
+            <h3>
+                  {data ? 'Data fetched from local storage':'No data stored in local storage'}
+            </h3>
       )
 }
 
@@ -15,7 +18,9 @@ ViewPage.getInitialProps = async (props) => {
                   ---> id = gpa (get gpa from local storage and return it as a prop)
                   ---> id = cgpa (get cgpa from local storage and return it as a prop)
       */ 
-      return {id};
+      const storedValue = window.localStorage.getItem(id);
+      const data = storedValue ? JSON.parse(storedValue) : null;
+      return { data };
 }
 
 export default ViewPage;
