@@ -1,23 +1,32 @@
 import React from 'react';
 import Results from '../../src/Containers/Results/Results';
 
+import { useRouter } from 'next/router';
+
 function ViewPage(props) {
-      const { data } = props;
-      console.log(data);
+      const router = useRouter();
+      const { id } = router.query;
+      let storedValue = null;
+      if(process.browser) {
+            storedValue = window.localStorage.getItem(id);  
+      }
+      const data = storedValue ? JSON.parse(storedValue) : null;
       return(
             <Results data={data} />
       )
 }
 
-ViewPage.getInitialProps = async (props) => {
-      const { id } = props.query;
-      const storedValue = window.localStorage.getItem(id);
-      const data = storedValue ? JSON.parse(storedValue) : null;
-      return { data };
-}
-
 export default ViewPage;
 
+// ViewPage.getInitialProps = async (props) => {
+//       const { id } = props.query;
+//       let storedValue = null;
+//       if(process.browser) {
+//             storedValue = window.localStorage.getItem(id);
+//       }
+//       const data = storedValue ? JSON.parse(storedValue) : null;
+//       return { data };
+// }
 // -> done
 /* 
       1.return id for now.

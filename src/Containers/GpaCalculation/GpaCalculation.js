@@ -133,7 +133,7 @@ function GpaCalculation() {
                         />}
                         {numSubjects>0 && 
                         <Row className='justify-content-center mt-4'>
-                              <Col md={4} className='d-flex justify-content-center'>
+                              <Col md={4} className='d-flex justify-content-center mb-4'>
                                     <Button 
                                           style={{
                                                 width:'100%'
