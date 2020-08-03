@@ -2,15 +2,17 @@ import React,{ useState,useRef } from 'react';
 import SubjectForm from '../../Components/GpaCalculation/SubjectForm';
 import CreditGradeForm from '../../Components/GpaCalculation/CreditGradeForm';
 import ResultModal from '../../Components/UI/ResultModal';
+import EnterNameModal from '../../Components/UI/EnterNameModal';
+import NotificationToast from '../../Components/UI/NotificationToast';
+import CalculateButton from '../../Components/UI/CalculateButton';
+
+import { v4 as uuidv4 } from 'uuid';
 
 import { useModalState } from '../../hooks/useModalState';
 
 import { defaultCreditGrade } from '../../Data/GpaCalculation';
 
-import { v4 as uuidv4 } from 'uuid';
-import { Container,Button,Row, Col } from 'react-bootstrap';
-import EnterNameModal from '../../Components/UI/EnterNameModal';
-import NotificationToast from '../../Components/UI/NotificationToast';
+import { Container} from 'react-bootstrap';
 
 function GpaCalculation() {
       const [ numSubjects,setNumSubjects ] = useState(0);
@@ -132,20 +134,9 @@ function GpaCalculation() {
                               handleGradeChange={handleGradeChange}
                         />}
                         {numSubjects>0 && 
-                        <Row className='justify-content-center mt-4'>
-                              <Col md={4} className='d-flex justify-content-center mb-4'>
-                                    <Button 
-                                          style={{
-                                                width:'100%'
-                                          }} 
-                                          variant='primary' 
-                                          className='text-center'
-                                          onClick={handleCalculate}
-                                    >
-                                          Calculate
-                                    </Button>
-                              </Col>
-                        </Row>}
+                        <CalculateButton 
+                              handleCalculate={handleCalculate} 
+                        />}
                   </Container>
                   <ResultModal 
                         show={showGpaModal}

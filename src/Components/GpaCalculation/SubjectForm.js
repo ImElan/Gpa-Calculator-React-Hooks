@@ -15,11 +15,11 @@ function SubjectForm(props,ref) {
             <option key={index}>{index}</option>
       )) 
 
-      const handleNumberOfSubjectChange = (event) => {
-            const newNumberOfSubject = +event.target.value;
+      const handleInputNumberChange = (event) => {
+            const newNumber = +event.target.value;
             handleChange(event);
-            handleArrayChange(newNumberOfSubject);
-            handleInputChange(newNumberOfSubject);
+            handleInputChange(newNumber);
+            handleArrayChange(newNumber);
       }
 
       useImperativeHandle(ref,() => (
@@ -38,7 +38,7 @@ function SubjectForm(props,ref) {
                               <Form.Control 
                                     as='select' 
                                     value={input}
-                                    onChange={handleNumberOfSubjectChange}
+                                    onChange={handleInputNumberChange}
                               >
                                     {renderOptions}
                               </Form.Control> 
