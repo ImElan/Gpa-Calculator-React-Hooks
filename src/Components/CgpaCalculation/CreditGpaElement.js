@@ -3,15 +3,18 @@ import { Col,InputGroup, Form } from 'react-bootstrap';
 import { useInputState } from '../../hooks/useInputState';
 
 function CreditGpaElement(props) {
-      const [ credits,handleCreditsChange,resetCredits ] = useInputState('');
-      const [ gpa,handleGpaChange,resetGpa ] = useInputState('');
+      const { creditGpa,changeCredit,changeGpa } = props;
+      const [ credits,handleCreditsChange,resetCredits ] = useInputState(creditGpa.credit);
+      const [ gpa,handleGpaChange,resetGpa ] = useInputState(creditGpa.gpa);
 
       const creditChangeHandler = (event) => {
             handleCreditsChange(event);
+            changeCredit(creditGpa.id,event.target.value);
       }
-
+      
       const gpaChangeHandler = (event) => {
             handleGpaChange(event);
+            changeGpa(creditGpa.id,event.target.value);
       }
 
       return(
