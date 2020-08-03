@@ -3,7 +3,7 @@ import React from 'react';
 import { Modal,Button } from 'react-bootstrap';
 
 function ResultModal(props) {
-      const { show,credit,gpa,handleClose,handleContinue } = props;
+      const { show,credit,result,message,handleClose,handleContinue } = props;
 
       const continueHandler = () => {
             handleClose();
@@ -21,7 +21,7 @@ function ResultModal(props) {
                   </Modal.Header>
                   <Modal.Body>
                         <h6>Total Credits : {credit}</h6>
-                        <h6>GPA : {gpa}</h6>
+                        <h6>{message} : {result}</h6>
                   </Modal.Body>
                   <Modal.Footer>
                   <Button variant="secondary" onClick={handleClose}>

@@ -2,6 +2,11 @@ import React,{ useRef, useState } from 'react';
 import SubjectForm from '../../Components/GpaCalculation/SubjectForm';
 import CreditGpaForm from '../../Components/CgpaCalculation/CreditGpaForm';
 import CalculateButton from '../../Components/UI/CalculateButton';
+import ResultModal from '../../Components/UI/ResultModal';
+import NotificationToast from '../../Components/UI/NotificationToast';
+import EnterNameModal from '../../Components/UI/EnterNameModal';
+
+import { useModalState } from '../../hooks/useModalState';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -12,6 +17,10 @@ function CgpaCalculation() {
       const [ creditGpaArray,setCreditGpaArray ] = useState([]);
       const [ credit,setCredit ] = useState('');
       const [ cgpa,setCgpa ] = useState('');
+
+      const [ showCgpaModal,openCgpaModal,closeCgpaModal ] = useModalState(false);
+      const [ showNameModal,openNameModal,closeNameModal ] = useModalState(false);
+      const [ showToast,openToast,closeToast] = useModalState(false);
 
       const subjectForm = useRef(null);
 
@@ -73,6 +82,29 @@ function CgpaCalculation() {
             const cgpa = (numerator/denominator).toFixed(3);
             setCredit(denominator);
             setCgpa(cgpa);
+            openCgpaModal();
+      }
+
+      const saveCgpa = (name) => {
+            const newCgpa = {
+                  result:cgpa,
+                  credits:credit,
+                  title:name,
+                  id:uuidv4()
+            }
+            const storedCgpa = window.localStorage.getItem('cgpa');
+            if(storedCgpa) {
+                  const cgpaArray = JSON.parse(storedCgpa);
+                  cgpaArray.push(newCgpa);
+                  window.localStorage.setItem('cgpa',cgpaArray);
+            } else {
+                  window.localStorage.setItem('cgpa',JSON.stringify([newCgpa]));
+            }
+            closeNameModal();
+            setNumSemesters(0);
+            subjectForm.current.resetInput();
+            setCreditGpaArray([]);
+            openToast();
       }
 
       return(
@@ -96,6 +128,25 @@ function CgpaCalculation() {
                               handleCalculate={calculateCgpa}
                         />}
                   </Container>
+                  <ResultModal 
+                        show={showCgpaModal}
+                        credit={credit}
+                        result={cgpa}
+                        message='CGPA'
+                        handleClose={closeCgpaModal}
+                        handleContinue={openNameModal}
+                  />
+                  <EnterNameModal 
+                        placeholder='Example : Upto Semester 3'
+                        show={showNameModal}
+                        handleClose={closeNameModal}
+                        handleSaveGpa={saveCgpa}
+                  />
+                  <NotificationToast
+                        show={showToast}
+                        message='CGpa Saved'
+                        closeToast={closeToast}
+                  />
             </>
       )
 }

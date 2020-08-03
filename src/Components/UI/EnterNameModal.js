@@ -5,7 +5,7 @@ import { useInputState } from '../../hooks/useInputState';
 
 function EnterNameModal(props) {
       
-      const { show,handleClose,handleSaveGpa } = props;
+      const { show,placeholder,handleClose,handleSaveGpa } = props;
       const [ name,handleChange,resetName ] = useInputState('');
 
       const saveGpa = () => {
@@ -27,7 +27,7 @@ function EnterNameModal(props) {
                               <Form.Label>Name</Form.Label>
                               <Form.Control 
                                     type='text' 
-                                    placeholder='Example : Semester 1'
+                                    placeholder={placeholder}
                                     value={name}
                                     onChange={handleChange}
                               />

@@ -141,11 +141,13 @@ function GpaCalculation() {
                   <ResultModal 
                         show={showGpaModal}
                         credit={credit}
-                        gpa={gpa}
+                        result={gpa}
+                        message='GPA'
                         handleClose={closeGpaModal}
                         handleContinue={openNameModal}
                   />
                   <EnterNameModal 
+                        placeholder='Example : Semester 1'
                         show={showNameModal}
                         handleClose={closeNameModal}
                         handleSaveGpa={saveGpa}
