@@ -9,12 +9,12 @@ function CreditGpaElement(props) {
 
       const creditChangeHandler = (event) => {
             handleCreditsChange(event);
-            changeCredit(creditGpa.id,event.target.value);
+            changeCredit(creditGpa.id,+event.target.value);
       }
       
       const gpaChangeHandler = (event) => {
             handleGpaChange(event);
-            changeGpa(creditGpa.id,event.target.value);
+            changeGpa(creditGpa.id,+event.target.value);
       }
 
       return(

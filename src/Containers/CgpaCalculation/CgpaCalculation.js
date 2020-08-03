@@ -1,6 +1,7 @@
 import React,{ useRef, useState } from 'react';
 import SubjectForm from '../../Components/GpaCalculation/SubjectForm';
 import CreditGpaForm from '../../Components/CgpaCalculation/CreditGpaForm';
+import CalculateButton from '../../Components/UI/CalculateButton';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -9,6 +10,8 @@ import { Container } from 'react-bootstrap';
 function CgpaCalculation() {
       const [ numSemesters,setNumSemesters ] = useState(0);
       const [ creditGpaArray,setCreditGpaArray ] = useState([]);
+      const [ credit,setCredit ] = useState('');
+      const [ cgpa,setCgpa ] = useState('');
 
       const subjectForm = useRef(null);
 
@@ -60,7 +63,17 @@ function CgpaCalculation() {
             setCreditGpaArray(updatedArray);
       }
 
-      // while Calculating convert it into a number
+      const calculateCgpa = () => {
+            let numerator = 0;
+            let denominator = 0;
+            creditGpaArray.forEach( creditGpa => {
+                  numerator += (creditGpa.credit * creditGpa.gpa);
+                  denominator += creditGpa.credit;
+            });
+            const cgpa = (numerator/denominator).toFixed(3);
+            setCredit(denominator);
+            setCgpa(cgpa);
+      }
 
       return(
             <>
@@ -72,11 +85,16 @@ function CgpaCalculation() {
                               handleInputChange={handleNumSemesterChange}
                               handleArrayChange={handleGradeGpaArrayChange}
                         />
+                        {numSemesters > 0 && 
                         <CreditGpaForm 
                               creditGpaArray={creditGpaArray}
                               changeCredit={handleCreditChange}
                               changeGpa={handleGpaChange}
-                        />
+                        />}
+                        {numSemesters > 0 && 
+                        <CalculateButton 
+                              handleCalculate={calculateCgpa}
+                        />}
                   </Container>
             </>
       )
