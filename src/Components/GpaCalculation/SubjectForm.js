@@ -9,7 +9,7 @@ import { InputGroup, Form, Row, Col  } from 'react-bootstrap';
 function SubjectForm(props,ref) {
 
       const [ input,handleChange,resetInput ] = useInputState('0');
-      const { totalSubjects,handleNumSubjectsChange,handleCreditGradeArrayChange } = props;
+      const { tag,totalSubjects,handleInputChange,handleArrayChange } = props;
 
       const renderOptions = Array.from({length:totalSubjects+1}).map( (_,index) => (
             <option key={index}>{index}</option>
@@ -18,8 +18,8 @@ function SubjectForm(props,ref) {
       const handleNumberOfSubjectChange = (event) => {
             const newNumberOfSubject = +event.target.value;
             handleChange(event);
-            handleCreditGradeArrayChange(newNumberOfSubject);
-            handleNumSubjectsChange(newNumberOfSubject);
+            handleArrayChange(newNumberOfSubject);
+            handleInputChange(newNumberOfSubject);
       }
 
       useImperativeHandle(ref,() => (
@@ -33,7 +33,7 @@ function SubjectForm(props,ref) {
                   <Col md={6}>
                         <InputGroup>
                               <InputGroup.Prepend>
-                                    <InputGroup.Text id='basic-addon1'>Enter Number Of Subjects</InputGroup.Text>
+                                    <InputGroup.Text id='basic-addon1'>Enter Number Of {tag}</InputGroup.Text>
                               </InputGroup.Prepend>
                               <Form.Control 
                                     as='select' 

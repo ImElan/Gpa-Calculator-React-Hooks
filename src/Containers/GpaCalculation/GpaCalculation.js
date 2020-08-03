@@ -119,10 +119,10 @@ function GpaCalculation() {
                   <Container className='mt-5'>
                         <SubjectForm 
                               ref={subjectForm}
+                              tag='Subjects'
                               totalSubjects={15} 
-                              creditGradeArray={creditGradeArray}
-                              handleNumSubjectsChange={handleNumSubjectsChange}
-                              handleCreditGradeArrayChange={handleCreditGradeArrayChange}
+                              handleInputChange={handleNumSubjectsChange}
+                              handleArrayChange={handleCreditGradeArrayChange}
                         />
                         {numSubjects > 0 && 
                         <CreditGradeForm 
