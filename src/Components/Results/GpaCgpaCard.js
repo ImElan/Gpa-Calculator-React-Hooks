@@ -14,19 +14,21 @@ function GpaCgpaCard(props) {
 		resultPlaceholder,
 		editElement,
 		deleteElement,
+		addToCgpaCalculation,
 	} = props;
 
 	const [showEditModal, openEditModal, closeEditModal] = useModalState(false);
 
 	const handleEdit = () => {
-		// TODO:
-		// Get the data from user using a modal
-		// editElement(id, newData);
 		openEditModal();
 	};
 
 	const handleDelete = () => {
 		deleteElement(id);
+	};
+
+	const handleAddToCgpa = () => {
+		addToCgpaCalculation(id);
 	};
 
 	return (
@@ -58,7 +60,11 @@ function GpaCgpaCard(props) {
 							>
 								Delete
 							</Button>
-							<Button variant='info' className='px-4 py-1'>
+							<Button
+								variant='info'
+								className='px-4 py-1'
+								onClick={handleAddToCgpa}
+							>
 								Add To CGPA Calculation
 							</Button>
 						</div>

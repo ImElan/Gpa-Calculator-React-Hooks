@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import CardsContainer from '../../Components/Results/CardsContainer';
 
+import { v4 as uuidv4 } from 'uuid';
+
 import { Container } from 'react-bootstrap';
 
 function Results(props) {
@@ -37,6 +39,22 @@ function Results(props) {
 		setResults(updatedResults);
 	};
 
+	const addToCgpaCalculation = (id) => {
+		const item = results.find((result) => result.id === id);
+		const selectedItem = {
+			...item,
+			id: uuidv4(),
+		};
+		const storedGpaForCgpaCalculation = window.localStorage.getItem('cgpaCalc');
+		if (!storedGpaForCgpaCalculation) {
+			window.localStorage.setItem('cgpaCalc', JSON.stringify([selectedItem]));
+		} else {
+			const updatedArr = JSON.parse(storedGpaForCgpaCalculation);
+			updatedArr.push(selectedItem);
+			window.localStorage.setItem('cgpaCalc', JSON.stringify(updatedArr));
+		}
+	};
+
 	return (
 		<Container>
 			<CardsContainer
@@ -44,6 +62,7 @@ function Results(props) {
 				queryId={queryId}
 				editElement={editElement}
 				deleteElement={deleteElement}
+				addToCgpaCalculation={addToCgpaCalculation}
 			/>
 		</Container>
 	);

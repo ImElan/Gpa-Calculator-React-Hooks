@@ -4,7 +4,7 @@ import GpaCgpaCard from './GpaCgpaCard';
 import { Row } from 'react-bootstrap';
 
 function CardsContainer(props) {
-	const { data, queryId, editElement, deleteElement } = props;
+	const { data, queryId, editElement, deleteElement, addToCgpaCalculation } = props;
 	let resultLabel;
 	let resultPlaceholder;
 	if (queryId === 'gpa') {
@@ -28,6 +28,7 @@ function CardsContainer(props) {
 						id={singleResult.id}
 						editElement={editElement}
 						deleteElement={deleteElement}
+						addToCgpaCalculation={addToCgpaCalculation}
 					/>
 				))}
 		</Row>

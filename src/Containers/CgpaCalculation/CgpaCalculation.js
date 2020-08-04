@@ -160,7 +160,6 @@ export default CgpaCalculation;
 
 /* 
       TODO:
-            1. add edit remove delete functionality
-            2. add configure functionality to set the grade and corresponding gradepoints.
-            3. add to cgpa calculation
+            ---> Add configure functionality to set the grade and corresponding gradepoints.
+            ---> Add to cgpa calculation functionality
 */
