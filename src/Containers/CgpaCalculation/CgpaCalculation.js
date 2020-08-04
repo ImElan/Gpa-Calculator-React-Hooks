@@ -10,7 +10,7 @@ import { useModalState } from '../../hooks/useModalState';
 
 import { v4 as uuidv4 } from 'uuid';
 
-import { Container } from 'react-bootstrap';
+import { Container, Alert, Button } from 'react-bootstrap';
 
 function CgpaCalculation() {
 	let storedGpasForCalculation;
@@ -21,6 +21,8 @@ function CgpaCalculation() {
 	const defaultSemesters = storedGpasForCalculation
 		? JSON.parse(storedGpasForCalculation).length
 		: 0;
+
+	const [showAlert, setShowAlert] = useState(storedGpasForCalculation ? true : false);
 	const [creditGpaArray, setCreditGpaArray] = useState(defaultVal);
 	const [numSemesters, setNumSemesters] = useState(defaultSemesters);
 	const [credit, setCredit] = useState('');
@@ -117,14 +119,50 @@ function CgpaCalculation() {
 		}
 		closeNameModal();
 		setNumSemesters(0);
+		clearValues();
 		subjectForm.current.resetInput();
 		setCreditGpaArray([]);
 		openToast();
 	};
 
+	// clears the values which was added to local storage by add to cgpa calculation button.
+	const clearValues = () => {
+		const storedGpasForCalculation = window.localStorage.getItem('cgpaCalc');
+		if (storedGpasForCalculation) {
+			window.localStorage.removeItem('cgpaCalc');
+		}
+		setShowAlert(false);
+		subjectForm.current.resetInput();
+		setNumSemesters(0);
+		setCreditGpaArray([]);
+	};
+
 	return (
 		<>
 			<Container className='mt-5'>
+				{showAlert && (
+					<Alert
+						variant='primary'
+						onClose={() => setShowAlert(false)}
+						className='mb-5'
+						dismissible
+					>
+						<h5>
+							You've added GPA's to the CGPA calculation from stored
+							Values.
+						</h5>
+						<hr />
+						<p className='mb-0'>
+							If you don't want these values clear it using the button
+							below
+						</p>
+						<div className='d-flex justify-content-end'>
+							<Button variant='outline-primary' onClick={clearValues}>
+								Clear Values
+							</Button>
+						</div>
+					</Alert>
+				)}
 				<SubjectForm
 					ref={subjectForm}
 					num={numSemesters}
@@ -170,10 +208,7 @@ export default CgpaCalculation;
 /* 
       TODO:
             ---> Add configure functionality to set the grade and corresponding gradepoints.
-            ---> clear add to cgpa calculation data in the local storage in two cases
-                  -> if user says so.
-                  -> or cgpa is calculated one time after adding it.
             ---> Add tooltip in results page explaining add to cgpa calculation feature
-            ---> add alert in cgpa calculation page telling user if he has added some value to calculation from result  page and it should have clear button to clear all added ones.
             ---> delete element in gpa/cgpa page
+            ---> toast after adding to cgpa calculation in results page
 */
