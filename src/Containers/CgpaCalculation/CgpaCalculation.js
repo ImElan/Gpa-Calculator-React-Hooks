@@ -13,8 +13,16 @@ import { v4 as uuidv4 } from 'uuid';
 import { Container } from 'react-bootstrap';
 
 function CgpaCalculation() {
-	const [numSemesters, setNumSemesters] = useState(0);
-	const [creditGpaArray, setCreditGpaArray] = useState([]);
+	let storedGpasForCalculation;
+	if (typeof window !== 'undefined') {
+		storedGpasForCalculation = window.localStorage.getItem('cgpaCalc');
+	}
+	const defaultVal = storedGpasForCalculation ? JSON.parse(storedGpasForCalculation) : [];
+	const defaultSemesters = storedGpasForCalculation
+		? JSON.parse(storedGpasForCalculation).length
+		: 0;
+	const [creditGpaArray, setCreditGpaArray] = useState(defaultVal);
+	const [numSemesters, setNumSemesters] = useState(defaultSemesters);
 	const [credit, setCredit] = useState('');
 	const [cgpa, setCgpa] = useState('');
 
@@ -119,6 +127,7 @@ function CgpaCalculation() {
 			<Container className='mt-5'>
 				<SubjectForm
 					ref={subjectForm}
+					num={numSemesters}
 					tag='Semesters'
 					totalSubjects={8}
 					handleInputChange={handleNumSemesterChange}
@@ -161,5 +170,10 @@ export default CgpaCalculation;
 /* 
       TODO:
             ---> Add configure functionality to set the grade and corresponding gradepoints.
-            ---> Add to cgpa calculation functionality
+            ---> clear add to cgpa calculation data in the local storage in two cases
+                  -> if user says so.
+                  -> or cgpa is calculated one time after adding it.
+            ---> Add tooltip in results page explaining add to cgpa calculation feature
+            ---> add alert in cgpa calculation page telling user if he has added some value to calculation from result  page and it should have clear button to clear all added ones.
+            ---> delete element in gpa/cgpa page
 */

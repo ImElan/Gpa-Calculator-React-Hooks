@@ -120,6 +120,7 @@ function GpaCalculation() {
 		<>
 			<Container className='mt-5'>
 				<SubjectForm
+					num={numSubjects}
 					ref={subjectForm}
 					tag='Subjects'
 					totalSubjects={15}

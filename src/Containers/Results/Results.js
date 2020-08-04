@@ -42,7 +42,8 @@ function Results(props) {
 	const addToCgpaCalculation = (id) => {
 		const item = results.find((result) => result.id === id);
 		const selectedItem = {
-			...item,
+			credit: item.credits,
+			gpa: item.result,
 			id: uuidv4(),
 		};
 		const storedGpaForCgpaCalculation = window.localStorage.getItem('cgpaCalc');
