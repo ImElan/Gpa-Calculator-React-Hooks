@@ -20,6 +20,7 @@ function GpaCalculation() {
 	const [creditGradeArray, setCreditGradeArray] = useState([]);
 	const [gpa, setGpa] = useState('');
 	const [credit, setCredit] = useState('');
+	const [resultName, setResultName] = useState('');
 
 	const [showGpaModal, openGpaModal, closeGpaModal] = useModalState(false);
 	const [showNameModal, openNameModal, closeNameModal] = useModalState(false);
@@ -109,6 +110,7 @@ function GpaCalculation() {
 		} else {
 			window.localStorage.setItem('gpa', JSON.stringify([newGpa]));
 		}
+		setResultName(name);
 		closeNameModal();
 		setNumSubjects(0);
 		subjectForm.current.resetInput();
@@ -151,17 +153,13 @@ function GpaCalculation() {
 				handleClose={closeNameModal}
 				handleSaveGpa={saveGpa}
 			/>
-			<NotificationToast show={showToast} message='Gpa Saved' closeToast={closeToast} />
+			<NotificationToast
+				show={showToast}
+				message={`${resultName} Gpa Saved`}
+				closeToast={closeToast}
+			/>
 		</>
 	);
 }
 
 export default GpaCalculation;
-
-/* 
-      ==> TODO: <==  (DONE)
-      1.after saving gpa change number of subject to zero.
-      2.also set the gpa credit elements to default.
-
-      these thing has to do with reseting the forms.
-*/

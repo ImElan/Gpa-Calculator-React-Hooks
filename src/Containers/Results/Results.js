@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import CardsContainer from '../../Components/Results/CardsContainer';
+import NotificationToast from '../../Components/UI/NotificationToast';
 
 import { v4 as uuidv4 } from 'uuid';
+
+import { useModalState } from '../../hooks/useModalState';
 
 import { Container } from 'react-bootstrap';
 
@@ -9,6 +12,9 @@ function Results(props) {
 	const { data, queryId } = props;
 
 	const [results, setResults] = useState(data);
+	const [notificationTitle, setNotificationTitle] = useState('');
+
+	const [showToast, openToast, closeToast] = useModalState(false);
 
 	useEffect(() => {
 		setResults(data);
@@ -54,18 +60,27 @@ function Results(props) {
 			updatedArr.push(selectedItem);
 			window.localStorage.setItem('cgpaCalc', JSON.stringify(updatedArr));
 		}
+		setNotificationTitle(item.title);
+		openToast();
 	};
 
 	return (
-		<Container>
-			<CardsContainer
-				data={results}
-				queryId={queryId}
-				editElement={editElement}
-				deleteElement={deleteElement}
-				addToCgpaCalculation={addToCgpaCalculation}
+		<>
+			<Container>
+				<CardsContainer
+					data={results}
+					queryId={queryId}
+					editElement={editElement}
+					deleteElement={deleteElement}
+					addToCgpaCalculation={addToCgpaCalculation}
+				/>
+			</Container>
+			<NotificationToast
+				show={showToast}
+				message={`${notificationTitle} result added to CGPA calculation`}
+				closeToast={closeToast}
 			/>
-		</Container>
+		</>
 	);
 }
 
