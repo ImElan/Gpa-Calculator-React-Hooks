@@ -11,7 +11,14 @@ const renderCreditOptions = Array.from({ length: 5 }).map((_, index) => (
 ));
 
 function CreditGradeElement(props) {
-	const { grades, creditGrade, changeCredit, changeGrade } = props;
+	const {
+		id,
+		grades,
+		creditGrade,
+		changeCredit,
+		changeGrade,
+		deleteCreditGradeElement,
+	} = props;
 	const [credit, handleCreditChange, resetCredit] = useInputState(creditGrade.credit);
 	const [grade, handleGradeChange, resetGrade] = useInputState(creditGrade.grade);
 
@@ -25,6 +32,10 @@ function CreditGradeElement(props) {
 	const gradeChangeHandler = (event) => {
 		handleGradeChange(event);
 		changeGrade(creditGrade.id, event.target.value);
+	};
+
+	const handleDelete = () => {
+		deleteCreditGradeElement(id);
 	};
 
 	return (
@@ -47,7 +58,12 @@ function CreditGradeElement(props) {
 				<Form.Control as='select' value={grade} onChange={gradeChangeHandler}>
 					{renderGradesOption}
 				</Form.Control>
-				<img className='trashIcon ml-3' src={trashIcon} alt='Delete' />
+				<img
+					className='trashIcon ml-3'
+					src={trashIcon}
+					alt='Delete'
+					onClick={handleDelete}
+				/>
 			</InputGroup>
 		</Col>
 	);

@@ -118,6 +118,13 @@ function GpaCalculation() {
 		openToast();
 	};
 
+	const deleteCreditGradeElement = (id) => {
+		const updatedArray = creditGradeArray.filter((creditGrade) => creditGrade.id !== id);
+		setCreditGradeArray(updatedArray);
+		setNumSubjects(numSubjects - 1);
+		subjectForm.current.handleChange({ target: { value: numSubjects - 1 } });
+	};
+
 	return (
 		<>
 			<Container className='mt-5'>
@@ -135,6 +142,7 @@ function GpaCalculation() {
 						creditGradeArray={creditGradeArray}
 						handleCreditChange={handleCreditChange}
 						handleGradeChange={handleGradeChange}
+						deleteCreditGradeElement={deleteCreditGradeElement}
 					/>
 				)}
 				{numSubjects > 0 && <CalculateButton handleCalculate={handleCalculate} />}

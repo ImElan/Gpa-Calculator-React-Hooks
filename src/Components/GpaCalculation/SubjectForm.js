@@ -24,6 +24,7 @@ function SubjectForm(props, ref) {
 
 	useImperativeHandle(ref, () => ({
 		resetInput,
+		handleChange,
 	}));
 
 	return (
