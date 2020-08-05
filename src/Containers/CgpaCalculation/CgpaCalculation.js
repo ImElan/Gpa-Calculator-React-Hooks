@@ -208,7 +208,8 @@ export default CgpaCalculation;
 /* 
       TODO:
             ---> Add configure functionality to set the grade and corresponding gradepoints.
-            ---> Add tooltip in results page explaining add to cgpa calculation feature
+            ---> check --> adding more than 8 results for cgpa calculation. 
             ---> delete element in gpa/cgpa page
             ---> toast after adding to cgpa calculation in results page
+            ---> after deleting result give a toast / fade animation 
 */

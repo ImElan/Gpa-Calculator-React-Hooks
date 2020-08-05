@@ -1,8 +1,8 @@
 import React from 'react';
-
-import { Card, Button, Col } from 'react-bootstrap';
 import EditResultModal from '../UI/EditResultModal';
 import { useModalState } from '../../hooks/useModalState';
+
+import { Card, Button, Col, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 function GpaCgpaCard(props) {
 	const {
@@ -60,13 +60,25 @@ function GpaCgpaCard(props) {
 							>
 								Delete
 							</Button>
-							<Button
-								variant='info'
-								className='px-4 py-1'
-								onClick={handleAddToCgpa}
+							<OverlayTrigger
+								placement='bottom'
+								overlay={
+									<Tooltip className='tooltip__cgpaCalc'>
+										You can use this button to add this
+										result to CGPA calculation and have it
+										<strong> pre-loaded</strong> when you go
+										to CGPA calculation page.
+									</Tooltip>
+								}
 							>
-								Add To CGPA Calculation
-							</Button>
+								<Button
+									variant='info'
+									className='px-4 py-1'
+									onClick={handleAddToCgpa}
+								>
+									Add To CGPA Calculation
+								</Button>
+							</OverlayTrigger>
 						</div>
 					</Card.Body>
 				</Card>
