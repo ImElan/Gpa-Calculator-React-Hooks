@@ -7,7 +7,7 @@ import trashIcon from '../../assets/trash-solid.svg';
 import { Col, InputGroup, Form } from 'react-bootstrap';
 
 function CreditGpaElement(props) {
-	const { creditGpa, changeCredit, changeGpa } = props;
+	const { id, creditGpa, changeCredit, changeGpa, deleteCreditGpaElement } = props;
 	const [credits, handleCreditsChange, resetCredits] = useInputState(creditGpa.credit);
 	const [gpa, handleGpaChange, resetGpa] = useInputState(creditGpa.gpa);
 
@@ -19,6 +19,10 @@ function CreditGpaElement(props) {
 	const gpaChangeHandler = (event) => {
 		handleGpaChange(event);
 		changeGpa(creditGpa.id, +event.target.value);
+	};
+
+	const handleDelete = () => {
+		deleteCreditGpaElement(id);
 	};
 
 	return (
@@ -45,7 +49,12 @@ function CreditGpaElement(props) {
 					value={gpa}
 					onChange={gpaChangeHandler}
 				/>
-				<img className='trashIcon ml-3' src={trashIcon} alt='Delete' />
+				<img
+					className='trashIcon ml-3'
+					src={trashIcon}
+					alt='Delete'
+					onClick={handleDelete}
+				/>
 			</InputGroup>
 		</Col>
 	);

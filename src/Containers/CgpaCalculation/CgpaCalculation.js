@@ -139,6 +139,13 @@ function CgpaCalculation() {
 		setCreditGpaArray([]);
 	};
 
+	const deleteCreditGpaElement = (id) => {
+		const updatedArray = creditGpaArray.filter((creditGpa) => creditGpa.id !== id);
+		setCreditGpaArray(updatedArray);
+		setNumSemesters(numSemesters - 1);
+		subjectForm.current.handleChange({ target: { value: numSemesters - 1 } });
+	};
+
 	return (
 		<>
 			<Container className='mt-5'>
@@ -178,6 +185,7 @@ function CgpaCalculation() {
 						creditGpaArray={creditGpaArray}
 						changeCredit={handleCreditChange}
 						changeGpa={handleGpaChange}
+						deleteCreditGpaElement={deleteCreditGpaElement}
 					/>
 				)}
 				{numSemesters > 0 && <CalculateButton handleCalculate={calculateCgpa} />}
