@@ -23,6 +23,9 @@ function CgpaCalculation() {
 		: 0;
 
 	const [showAlert, setShowAlert] = useState(storedGpasForCalculation ? true : false);
+	const [showValidationAlert, setShowValidationAlert] = useState(
+		storedGpasForCalculation ? true : false
+	);
 	const [creditGpaArray, setCreditGpaArray] = useState(defaultVal);
 	const [numSemesters, setNumSemesters] = useState(defaultSemesters);
 	const [credit, setCredit] = useState('');
@@ -106,7 +109,7 @@ function CgpaCalculation() {
 			setCgpa(cgpa);
 			openCgpaModal();
 		} else {
-			console.log('Fields are empty...');
+			setShowValidationAlert(true);
 		}
 	};
 
@@ -191,6 +194,16 @@ function CgpaCalculation() {
 					handleInputChange={handleNumSemesterChange}
 					handleArrayChange={handleGradeGpaArrayChange}
 				/>
+				{showValidationAlert && (
+					<Alert
+						variant='danger'
+						onClose={() => setShowValidationAlert(false)}
+						className='mt-5'
+						dismissible
+					>
+						<h5>Fields can't be empty.</h5>
+					</Alert>
+				)}
 				{numSemesters > 0 && (
 					<CreditGpaForm
 						creditGpaArray={creditGpaArray}
