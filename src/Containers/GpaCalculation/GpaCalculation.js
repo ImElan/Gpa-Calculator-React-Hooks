@@ -155,7 +155,7 @@ function GpaCalculation() {
 			/>
 			<NotificationToast
 				show={showToast}
-				message={`${resultName} Gpa Saved`}
+				message={`${resultName} GPA Saved`}
 				closeToast={closeToast}
 			/>
 		</>

@@ -27,6 +27,7 @@ function CgpaCalculation() {
 	const [numSemesters, setNumSemesters] = useState(defaultSemesters);
 	const [credit, setCredit] = useState('');
 	const [cgpa, setCgpa] = useState('');
+	const [resultName, setResultName] = useState('');
 
 	const [showCgpaModal, openCgpaModal, closeCgpaModal] = useModalState(false);
 	const [showNameModal, openNameModal, closeNameModal] = useModalState(false);
@@ -117,6 +118,7 @@ function CgpaCalculation() {
 		} else {
 			window.localStorage.setItem('cgpa', JSON.stringify([newCgpa]));
 		}
+		setResultName(name);
 		closeNameModal();
 		setNumSemesters(0);
 		clearValues();
@@ -196,7 +198,7 @@ function CgpaCalculation() {
 			/>
 			<NotificationToast
 				show={showToast}
-				message='CGpa Saved'
+				message={`${resultName} CGPA Saved`}
 				closeToast={closeToast}
 			/>
 		</>
@@ -208,8 +210,5 @@ export default CgpaCalculation;
 /* 
       TODO:
             ---> Add configure functionality to set the grade and corresponding gradepoints.
-            ---> check --> adding more than 8 results for cgpa calculation. 
             ---> delete element in gpa/cgpa page
-            ---> toast after adding to cgpa calculation in results page
-            ---> after deleting result give a toast / fade animation 
 */

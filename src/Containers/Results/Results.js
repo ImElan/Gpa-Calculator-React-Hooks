@@ -6,13 +6,14 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { useModalState } from '../../hooks/useModalState';
 
-import { Container } from 'react-bootstrap';
+import { Container, Alert } from 'react-bootstrap';
 
 function Results(props) {
 	const { data, queryId } = props;
 
 	const [results, setResults] = useState(data);
 	const [notificationTitle, setNotificationTitle] = useState('');
+	const [showAlert, setShowAlert] = useState(false);
 
 	const [showToast, openToast, closeToast] = useModalState(false);
 
@@ -37,12 +38,24 @@ function Results(props) {
 		window.localStorage.setItem(queryId, JSON.stringify(updatedResults));
 		// update in state
 		setResults(updatedResults);
+		let message = 'GPA';
+		if (queryId == 'cgpa') {
+			message = 'CGPA';
+		}
+		setNotificationTitle(`${message} Edited.`);
+		openToast();
 	};
 
 	const deleteElement = (id) => {
 		const updatedResults = results.filter((result) => result.id !== id);
 		window.localStorage.setItem(queryId, JSON.stringify(updatedResults));
 		setResults(updatedResults);
+		let message = 'GPA';
+		if (queryId == 'cgpa') {
+			message = 'CGPA';
+		}
+		setNotificationTitle(`${message} deleted.`);
+		openToast();
 	};
 
 	const addToCgpaCalculation = (id) => {
@@ -57,16 +70,30 @@ function Results(props) {
 			window.localStorage.setItem('cgpaCalc', JSON.stringify([selectedItem]));
 		} else {
 			const updatedArr = JSON.parse(storedGpaForCgpaCalculation);
-			updatedArr.push(selectedItem);
-			window.localStorage.setItem('cgpaCalc', JSON.stringify(updatedArr));
+			if (updatedArr.length < 8) {
+				updatedArr.push(selectedItem);
+				window.localStorage.setItem('cgpaCalc', JSON.stringify(updatedArr));
+				setNotificationTitle(`${item.title} result added to CGPA calculation`);
+				openToast();
+			} else {
+				setShowAlert(true);
+			}
 		}
-		setNotificationTitle(item.title);
-		openToast();
 	};
 
 	return (
 		<>
 			<Container>
+				{showAlert && (
+					<Alert
+						variant='danger'
+						onClose={() => setShowAlert(false)}
+						className='mt-5'
+						dismissible
+					>
+						<h5>Only 8 results can be added for CGPA Calculation.</h5>
+					</Alert>
+				)}
 				<CardsContainer
 					data={results}
 					queryId={queryId}
@@ -77,7 +104,7 @@ function Results(props) {
 			</Container>
 			<NotificationToast
 				show={showToast}
-				message={`${notificationTitle} result added to CGPA calculation`}
+				message={notificationTitle}
 				closeToast={closeToast}
 			/>
 		</>
