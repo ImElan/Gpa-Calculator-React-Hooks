@@ -4,6 +4,7 @@ import MainNavbar from '../src/Components/Layout/MainNavbar';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../src/Components/Results/GpaCgpaCard.css';
+import '../src/Components/GpaCalculation/CreditGradeElement.css';
 
 function MyApp({ Component, pageProps }) {
 	return (
