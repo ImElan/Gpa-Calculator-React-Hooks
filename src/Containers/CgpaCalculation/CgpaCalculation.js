@@ -91,16 +91,27 @@ function CgpaCalculation() {
                               ---> else show a alert. 
 
             */
-		let numerator = 0;
-		let denominator = 0;
-		creditGpaArray.forEach((creditGpa) => {
-			numerator += creditGpa.credit * creditGpa.gpa;
-			denominator += creditGpa.credit;
-		});
-		const cgpa = (numerator / denominator).toFixed(3);
-		setCredit(denominator);
-		setCgpa(cgpa);
-		openCgpaModal();
+		const isValid = creditGpaArray.every(
+			(creditGpa) => !isFieldEmpty(creditGpa.credit) && !isFieldEmpty(creditGpa.gpa)
+		);
+		if (isValid) {
+			let numerator = 0;
+			let denominator = 0;
+			creditGpaArray.forEach((creditGpa) => {
+				numerator += creditGpa.credit * creditGpa.gpa;
+				denominator += creditGpa.credit;
+			});
+			const cgpa = (numerator / denominator).toFixed(3);
+			setCredit(denominator);
+			setCgpa(cgpa);
+			openCgpaModal();
+		} else {
+			console.log('Fields are empty...');
+		}
+	};
+
+	const isFieldEmpty = (value) => {
+		return value.length === 0 || value === 0;
 	};
 
 	const saveCgpa = (name) => {
@@ -218,5 +229,5 @@ export default CgpaCalculation;
 /* 
       TODO:
             ---> Add configure functionality to set the grade and corresponding gradepoints.
-            ---> delete element in gpa/cgpa page
+            ---> Check for duplicate name before storing it in local storage.
 */
