@@ -23,9 +23,7 @@ function CgpaCalculation() {
 		: 0;
 
 	const [showAlert, setShowAlert] = useState(storedGpasForCalculation ? true : false);
-	const [showValidationAlert, setShowValidationAlert] = useState(
-		storedGpasForCalculation ? true : false
-	);
+	const [showValidationAlert, setShowValidationAlert] = useState(false);
 	const [creditGpaArray, setCreditGpaArray] = useState(defaultVal);
 	const [numSemesters, setNumSemesters] = useState(defaultSemesters);
 	const [credit, setCredit] = useState('');
@@ -87,13 +85,6 @@ function CgpaCalculation() {
 	};
 
 	const calculateCgpa = () => {
-		/*    TODO:
-                  ---------  validate before calculating it ---------
-                        ---> check if all the fields are entered
-                              ---> if yes calculate
-                              ---> else show a alert. 
-
-            */
 		const isValid = creditGpaArray.every(
 			(creditGpa) => !isFieldEmpty(creditGpa.credit) && !isFieldEmpty(creditGpa.gpa)
 		);
@@ -223,7 +214,9 @@ function CgpaCalculation() {
 				handleContinue={openNameModal}
 			/>
 			<EnterNameModal
+				queryId='cgpa'
 				placeholder='Example : Upto Semester 3'
+				validation='Give it a meaningful name so that it will be easier for you to understand it later'
 				show={showNameModal}
 				handleClose={closeNameModal}
 				handleSaveGpa={saveCgpa}

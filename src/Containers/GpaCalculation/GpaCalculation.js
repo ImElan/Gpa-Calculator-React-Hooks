@@ -156,7 +156,9 @@ function GpaCalculation() {
 				handleContinue={openNameModal}
 			/>
 			<EnterNameModal
+				queryId='gpa'
 				placeholder='Example : Semester 1'
+				validation='Give it a meaningful name so that it will be easier for you to understand it later'
 				show={showNameModal}
 				handleClose={closeNameModal}
 				handleSaveGpa={saveGpa}
