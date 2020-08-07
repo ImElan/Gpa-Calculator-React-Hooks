@@ -5,6 +5,7 @@ import ResultModal from '../../Components/UI/ResultModal';
 import EnterNameModal from '../../Components/UI/EnterNameModal';
 import NotificationToast from '../../Components/UI/NotificationToast';
 import CalculateButton from '../../Components/UI/CalculateButton';
+import ConfigureModal from '../../Components/UI/CreditGradeConfiguration/ConfigureModal';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -14,9 +15,10 @@ import { defaultCreditGrade } from '../../Data/GpaCalculation';
 
 import { Container } from 'react-bootstrap';
 
-function GpaCalculation() {
+function GpaCalculation(props) {
+	const { config } = props;
+
 	const [numSubjects, setNumSubjects] = useState(0);
-	const [creditGradeFormat, setCreditGradeFormat] = useState(defaultCreditGrade);
 	const [creditGradeArray, setCreditGradeArray] = useState([]);
 	const [gpa, setGpa] = useState('');
 	const [credit, setCredit] = useState('');
@@ -25,6 +27,11 @@ function GpaCalculation() {
 	const [showGpaModal, openGpaModal, closeGpaModal] = useModalState(false);
 	const [showNameModal, openNameModal, closeNameModal] = useModalState(false);
 	const [showToast, openToast, closeToast] = useModalState(false);
+
+	const [creditGradeFormat, setCreditGradeFormat] = useState(config ? JSON.parse(config) : {});
+	const [showConfigureModal, openConfigureModal, closeConfigureModal] = useModalState(
+		config ? false : true
+	);
 
 	const subjectForm = useRef(null);
 
@@ -125,6 +132,10 @@ function GpaCalculation() {
 		subjectForm.current.handleChange({ target: { value: numSubjects - 1 } });
 	};
 
+	const saveConfiguration = () => {
+		console.log('Saved Config...');
+	};
+
 	return (
 		<>
 			<Container className='mt-5'>
@@ -167,6 +178,11 @@ function GpaCalculation() {
 				show={showToast}
 				message={`${resultName} GPA Saved`}
 				closeToast={closeToast}
+			/>
+			<ConfigureModal
+				show={showConfigureModal}
+				closeHandler={closeConfigureModal}
+				saveHandler={saveConfiguration}
 			/>
 		</>
 	);

@@ -40,7 +40,7 @@ function CreditGpaElement(props) {
 					onChange={creditChangeHandler}
 				/>
 				<InputGroup.Prepend>
-					<InputGroup.Text>Grades</InputGroup.Text>
+					<InputGroup.Text>GPA</InputGroup.Text>
 				</InputGroup.Prepend>
 				<Form.Control
 					type='number'

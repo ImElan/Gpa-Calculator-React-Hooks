@@ -235,5 +235,5 @@ export default CgpaCalculation;
 /* 
       TODO:
             ---> Add configure functionality to set the grade and corresponding gradepoints.
-            ---> Check for duplicate name before storing it in local storage.
+            ---> Also do validation while editing results.
 */
