@@ -3,10 +3,18 @@ import ConfigForm from './ConfigForm';
 
 import { v4 as uuidv4 } from 'uuid';
 
-import { Modal, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Modal, Button, OverlayTrigger, Tooltip, Alert } from 'react-bootstrap';
 
 function ConfigureModal(props) {
-	const { numGrades, show, closeHandler, saveHandler, useDefaultHandler } = props;
+	const {
+		numGrades,
+		show,
+		showValidationAlert,
+		hideValidationAlert,
+		closeHandler,
+		saveHandler,
+		useDefaultHandler,
+	} = props;
 	const defaultArr = Array.from({ length: numGrades }).map((_) => ({
 		id: uuidv4(),
 		grade: '',
@@ -51,6 +59,11 @@ function ConfigureModal(props) {
 			<Modal.Header>
 				<Modal.Title>Configure Your Credit Grade System</Modal.Title>
 			</Modal.Header>
+			{showValidationAlert && (
+				<Alert variant='danger' onClose={hideValidationAlert} dismissible>
+					<h5>Fields can't be empty.</h5>
+				</Alert>
+			)}
 			<Modal.Body>
 				<div className='d-flex align-items-center mb-3'>
 					Use the default Value ?

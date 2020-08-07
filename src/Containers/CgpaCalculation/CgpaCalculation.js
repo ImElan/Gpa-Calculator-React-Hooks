@@ -235,5 +235,4 @@ export default CgpaCalculation;
 /* 
       TODO:
             ---> Do validation while configuring credit grade-point
-            ---> Do validation while editing results.
 */

@@ -23,6 +23,7 @@ function GpaCalculation(props) {
 	const [gpa, setGpa] = useState('');
 	const [credit, setCredit] = useState('');
 	const [resultName, setResultName] = useState('');
+	const [showValidationAlert, setShowValidationAlert] = useState(false);
 
 	const [showGpaModal, openGpaModal, closeGpaModal] = useModalState(false);
 	const [showNameModal, openNameModal, closeNameModal] = useModalState(false);
@@ -145,19 +146,33 @@ function GpaCalculation(props) {
 	const saveConfiguration = (newConfig) => {
 		// expecting an array of object
 		// change it object format
-		let newFormat = {};
-		newConfig.forEach((element) => {
-			newFormat[element.grade] = element.gradePoint;
-		});
-		setCreditGradeFormat(newFormat);
-		window.localStorage.setItem('config', JSON.stringify(newFormat));
-		closeConfigureModal();
+		const isValid = newConfig.every(
+			(element) =>
+				element.grade !== '' &&
+				element.gradePoint !== '' &&
+				element.gradePoint !== 0
+		);
+		if (isValid) {
+			let newFormat = {};
+			newConfig.forEach((element) => {
+				newFormat[element.grade] = element.gradePoint;
+			});
+			setCreditGradeFormat(newFormat);
+			window.localStorage.setItem('config', JSON.stringify(newFormat));
+			closeConfigureModal();
+		} else {
+			setShowValidationAlert(true);
+		}
 	};
 
 	const useDefaultHandler = () => {
 		setCreditGradeFormat(defaultCreditGrade);
 		window.localStorage.setItem('config', JSON.stringify(defaultCreditGrade));
 		closeConfigureModal();
+	};
+
+	const hideValidationAlert = () => {
+		setShowValidationAlert(false);
 	};
 
 	return (
@@ -209,6 +224,8 @@ function GpaCalculation(props) {
 				closeHandler={closeConfigureModal}
 				saveHandler={saveConfiguration}
 				useDefaultHandler={useDefaultHandler}
+				showValidationAlert={showValidationAlert}
+				hideValidationAlert={hideValidationAlert}
 			/>
 		</>
 	);
