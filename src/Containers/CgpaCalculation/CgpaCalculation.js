@@ -92,8 +92,8 @@ function CgpaCalculation() {
 			let numerator = 0;
 			let denominator = 0;
 			creditGpaArray.forEach((creditGpa) => {
-				numerator += creditGpa.credit * creditGpa.gpa;
-				denominator += creditGpa.credit;
+				numerator += +creditGpa.credit * +creditGpa.gpa;
+				denominator += +creditGpa.credit;
 			});
 			const cgpa = (numerator / denominator).toFixed(3);
 			setCredit(denominator);
@@ -234,6 +234,6 @@ export default CgpaCalculation;
 
 /* 
       TODO:
-            ---> Add configure functionality to set the grade and corresponding gradepoints.
-            ---> Also do validation while editing results.
+            ---> Do validation while configuring credit grade-point
+            ---> Do validation while editing results.
 */

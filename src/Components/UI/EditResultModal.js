@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useInputState } from '../../hooks/useInputState';
 
@@ -8,6 +8,8 @@ function EditResultModal(props) {
 	const {
 		id,
 		show,
+		queryId,
+		validation,
 		prevTitle,
 		prevCredits,
 		prevResult,
@@ -16,6 +18,10 @@ function EditResultModal(props) {
 		handleClose,
 		handleEdit,
 	} = props;
+
+	const [validationText, setValidationText] = useState(validation);
+	const [validityClassName, setValidityClassName] = useState('text-muted');
+	const [isValid, setIsValid] = useState(0);
 
 	const [title, handleTitleChange, resetTitle] = useInputState(prevTitle);
 	const [credits, handleCreditsChange, resetCredits] = useInputState(prevCredits);
@@ -42,6 +48,42 @@ function EditResultModal(props) {
 		handleClose();
 	};
 
+	const titleChangeHandler = (event) => {
+		handleTitleChange(event);
+		checkForValidity(event.target.value);
+	};
+
+	const checkForValidity = (value) => {
+		if (value.trim().length > 0) {
+			if (isDuplicateName(value)) {
+				setValidationText('Name already exists. Try a different name...');
+				setValidityClassName('text-danger');
+				setIsValid(false);
+			} else {
+				setValidationText("You're good to save the results.");
+				setValidityClassName('text-success');
+				setIsValid(true);
+			}
+		} else {
+			setValidationText('Field cannot be empty.');
+			setValidityClassName('text-danger');
+			setIsValid(false);
+		}
+	};
+
+	const isDuplicateName = (name) => {
+		const storedValues = window.localStorage.getItem(queryId);
+		if (storedValues) {
+			const valuesArr = JSON.parse(storedValues);
+			const isUnique = valuesArr.every(
+				(value) => value.title.toLowerCase() !== name.toLowerCase().trim()
+			);
+			return !isUnique;
+		} else {
+			return false;
+		}
+	};
+
 	return (
 		<Modal centered show={show} onHide={closeHandler}>
 			<Modal.Header closeButton>
@@ -54,8 +96,9 @@ function EditResultModal(props) {
 						type='text'
 						placeholder='Enter New Name : '
 						value={title}
-						onChange={handleTitleChange}
+						onChange={titleChangeHandler}
 					/>
+					<Form.Text className={validityClassName}>{validationText}</Form.Text>
 				</Form.Group>
 				<Form.Group>
 					<Form.Label>Credits</Form.Label>

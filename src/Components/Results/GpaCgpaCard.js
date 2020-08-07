@@ -9,6 +9,7 @@ function GpaCgpaCard(props) {
 		id,
 		title,
 		credits,
+		queryId,
 		result,
 		resultLabel,
 		resultPlaceholder,
@@ -85,6 +86,8 @@ function GpaCgpaCard(props) {
 			</Col>
 			<EditResultModal
 				id={id}
+				queryId={queryId}
+				validation='Give it a meaningful name so that it will be easier for you to understand it later'
 				show={showEditModal}
 				prevTitle={title}
 				prevCredits={credits}

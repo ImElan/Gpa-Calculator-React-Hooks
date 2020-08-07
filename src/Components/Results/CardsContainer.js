@@ -19,6 +19,7 @@ function CardsContainer(props) {
 			{data &&
 				data.map((singleResult) => (
 					<GpaCgpaCard
+						queryId={queryId}
 						resultLabel={resultLabel}
 						resultPlaceholder={resultPlaceholder}
 						title={singleResult.title}

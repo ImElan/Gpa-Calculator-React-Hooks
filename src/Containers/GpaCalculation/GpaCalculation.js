@@ -17,6 +17,7 @@ import { Container } from 'react-bootstrap';
 
 function GpaCalculation(props) {
 	const { config } = props;
+
 	const [numSubjects, setNumSubjects] = useState(0);
 	const [creditGradeArray, setCreditGradeArray] = useState([]);
 	const [gpa, setGpa] = useState('');
