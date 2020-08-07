@@ -17,7 +17,6 @@ import { Container } from 'react-bootstrap';
 
 function GpaCalculation(props) {
 	const { config } = props;
-
 	const [numSubjects, setNumSubjects] = useState(0);
 	const [creditGradeArray, setCreditGradeArray] = useState([]);
 	const [gpa, setGpa] = useState('');
@@ -43,9 +42,19 @@ function GpaCalculation(props) {
 
 	const handleCreditGradeArrayChange = (newNum) => {
 		let updatedArray = [...creditGradeArray];
+
+		const keysArr = Object.keys(creditGradeFormat);
+		console.log(keysArr);
+		let middleIndex = Math.floor(keysArr.length / 2);
+		const defaultGrade = keysArr[middleIndex];
+
 		if (newNum > numSubjects) {
 			for (let i = 0; i < newNum - numSubjects; i++) {
-				updatedArray.push({ credit: 3, grade: 'A', id: uuidv4() });
+				updatedArray.push({
+					credit: 3,
+					grade: defaultGrade,
+					id: uuidv4(),
+				});
 			}
 		} else if (numSubjects > newNum) {
 			updatedArray = updatedArray.slice(0, newNum);
@@ -132,8 +141,22 @@ function GpaCalculation(props) {
 		subjectForm.current.handleChange({ target: { value: numSubjects - 1 } });
 	};
 
-	const saveConfiguration = () => {
-		console.log('Saved Config...');
+	const saveConfiguration = (newConfig) => {
+		// expecting an array of object
+		// change it object format
+		let newFormat = {};
+		newConfig.forEach((element) => {
+			newFormat[element.grade] = element.gradePoint;
+		});
+		setCreditGradeFormat(newFormat);
+		window.localStorage.setItem('config', JSON.stringify(newFormat));
+		closeConfigureModal();
+	};
+
+	const useDefaultHandler = () => {
+		setCreditGradeFormat(defaultCreditGrade);
+		window.localStorage.setItem('config', JSON.stringify(defaultCreditGrade));
+		closeConfigureModal();
 	};
 
 	return (
@@ -180,9 +203,11 @@ function GpaCalculation(props) {
 				closeToast={closeToast}
 			/>
 			<ConfigureModal
+				numGrades={5}
 				show={showConfigureModal}
 				closeHandler={closeConfigureModal}
 				saveHandler={saveConfiguration}
+				useDefaultHandler={useDefaultHandler}
 			/>
 		</>
 	);

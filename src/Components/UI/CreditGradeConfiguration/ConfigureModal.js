@@ -1,10 +1,51 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ConfigForm from './ConfigForm';
+
+import { v4 as uuidv4 } from 'uuid';
 
 import { Modal, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 function ConfigureModal(props) {
-	const { show, closeHandler, saveHandler, useDefaultHandler } = props;
+	const { numGrades, show, closeHandler, saveHandler, useDefaultHandler } = props;
+	const defaultArr = Array.from({ length: numGrades }).map((_) => ({
+		id: uuidv4(),
+		grade: '',
+		gradePoint: '',
+	}));
+	const [format, setFormat] = useState(defaultArr);
+
+	const gradeChange = (id, newGrade) => {
+		const updatedArr = format.map((singleElement) => {
+			if (singleElement.id === id) {
+				return {
+					...singleElement,
+					grade: newGrade.toUpperCase(),
+				};
+			} else {
+				return singleElement;
+			}
+		});
+		setFormat(updatedArr);
+	};
+
+	const gradePointChange = (id, newGradePoint) => {
+		const updatedArr = format.map((singleElement) => {
+			if (singleElement.id === id) {
+				return {
+					...singleElement,
+					gradePoint: +newGradePoint,
+				};
+			} else {
+				return singleElement;
+			}
+		});
+		setFormat(updatedArr);
+	};
+
+	const handleSave = () => {
+		saveHandler(format);
+	};
+
 	return (
 		<Modal centered show={show} onHide={closeHandler} backdrop='static' keyboard={false}>
 			<Modal.Header>
@@ -37,10 +78,14 @@ function ConfigureModal(props) {
 						</Button>
 					</OverlayTrigger>
 				</div>
-				<ConfigForm />
+				<ConfigForm
+					format={format}
+					gradeChange={gradeChange}
+					gradePointChange={gradePointChange}
+				/>
 			</Modal.Body>
 			<Modal.Footer>
-				<Button variant='primary' onClick={saveHandler}>
+				<Button variant='primary' onClick={handleSave}>
 					Save
 				</Button>
 			</Modal.Footer>
